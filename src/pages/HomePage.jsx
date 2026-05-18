@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
+import Loader from "../components/Loader";
 
 
 function HomePage() {
@@ -10,7 +11,8 @@ function HomePage() {
     series,
     search,
     submittedSearch,
-    selectedGenre
+    selectedGenre,
+    isLoading
   } = useContext(GlobalContext);
 
   const moviesToShow = submittedSearch.trim() === "" ? trendingMovies : movies;
@@ -22,6 +24,10 @@ function HomePage() {
     }
     return movie.genre_ids.includes(parseInt(selectedGenre));
   });
+ 
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (<>
 

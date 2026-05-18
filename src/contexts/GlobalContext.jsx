@@ -69,6 +69,7 @@ function GlobalProvider({ children }) {
             setSeries([]);
             return;
         };
+        
         setIsLoading(true);
 
         const movieFetch = fetch(movieUrl, options)
