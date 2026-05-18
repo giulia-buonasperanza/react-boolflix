@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
-import { genres } from "../data/genres";
+import genres  from "../data/genres";
 
 function Filters() {
     const { selectedGenre, setSelectedGenre } = useContext(GlobalContext);

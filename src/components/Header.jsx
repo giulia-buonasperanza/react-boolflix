@@ -1,9 +1,10 @@
 import { NavLink } from "react-router";
 import useTheme from "../hooks/useTheme";
+import SearchBar from "./SearchBar";
+import Filters from "./Filters";
 
 function Header() {
-    const { theme, toggleTheme } = useTheme();
-
+    
     return (
         <header>
             <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom">
@@ -25,14 +26,11 @@ function Header() {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/about">About</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <Filters/>
+                            </li>
                             <li className="nav-item ms-2">
-                                <button
-                                    className="btn btn-outline-secondary btn-sm"
-                                    onClick={toggleTheme}
-                                    aria-label="Cambia tema"
-                                >
-                                    {theme === 'light' ? '🌙' : '☀️'}
-                                </button>
+                                <SearchBar />
                             </li>
                         </ul>
                     </div>

@@ -1,12 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
+import Film from "./pages/Film";
 import NotFound from "./pages/NotFound";
-import { GlobalContext } from "./contexts/GlobalContext";
+import { GlobalContext, GlobalProvider } from "./contexts/GlobalContext";
+
 
 function App() {
   return (
-    <GlobalContext>
+    <GlobalProvider>
       <BrowserRouter>
         <Routes>
           <Route element={<MainLayout />}>
@@ -16,7 +18,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </GlobalContext>
+    </GlobalProvider>
   );
 }
 export default App;

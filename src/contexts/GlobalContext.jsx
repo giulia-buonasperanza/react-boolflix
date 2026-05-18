@@ -10,7 +10,7 @@ function GlobalProvider({ children }) {
     const [series, setSeries] = useState([]);
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedContent, setSelectedContent] = useState("all");
+    const [selectedGenre, setSelectedGenre] = useState("all");
 
 
 
@@ -67,12 +67,15 @@ function GlobalProvider({ children }) {
         setSearch,
         isLoading,
         fetchContents,
+        selectedGenre,
+        setSelectedGenre
+
     };
 
     return (
-        <GlobalContext value={contextValue}>
+        <GlobalContext.Provider value={contextValue}>
             {children}
-        </GlobalContext>
+        </GlobalContext.Provider>
     );
 };
 
