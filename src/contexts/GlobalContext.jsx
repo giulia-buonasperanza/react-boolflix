@@ -69,7 +69,7 @@ function GlobalProvider({ children }) {
             setSeries([]);
             return;
         };
-        
+
         setIsLoading(true);
 
         const movieFetch = fetch(movieUrl, options)
@@ -98,12 +98,30 @@ function GlobalProvider({ children }) {
     };
 
 
+    function fetchDetail(id, mediaType) {
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${API_TMDB_TOKEN}`
+            }
+        };
+
+        const url = `${API_TMDB_BASE_URL}/${mediaType}/${id}?language=it-IT`;
+
+        return fetch(url, options)
+            .then((response) => {
+                return response.json();
+            });
+    }
+
+
     function resetHome() {
         setSearch("");
         setSubmittedSearch("");
         setSelectedGenre("all");
         setMovies([]);
-        setSeries([]);  
+        setSeries([]);
     }
 
     const contextValue = {
@@ -120,7 +138,8 @@ function GlobalProvider({ children }) {
         setSelectedGenre,
         trendingMovies,
         trendingSeries,
-        resetHome
+        resetHome,
+        fetchDetail
     };
 
     return (
