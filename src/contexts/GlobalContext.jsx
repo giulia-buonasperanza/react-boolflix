@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const GlobalContext = createContext();
 const API_TMDB_BASE_URL = "https://api.themoviedb.org/3";
@@ -11,8 +11,42 @@ function GlobalProvider({ children }) {
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [selectedGenre, setSelectedGenre] = useState("all");
+    const [trendingMovies, setTrendingMovies] = useState([]);
+    const [trendingSeries, setTrendingSeries] = useState([]);
+
+    function fetchTrending() {
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${API_TMDB_TOKEN}`
+            }
+        };
+
+        const trendingMovieFetch = fetch(`${API_TMDB_BASE_URL}/trending/movie/day?language=it-IT`, options)
+            .then((response) => {
+                return response.json();
+            });
+
+        const trendingSerieTvFetch = fetch(`${API_TMDB_BASE_URL}/trending/tv/day?language=it-IT`, options)
+            .then((response) => {
+                return response.json();
+            });
+
+        Promise.all([trendingMovieFetch, trendingSerieTvFetch])
+            .then(([trendingMovieData, trendingSerieTvData]) => {
+                setTrendingMovies(trendingMovieData.results);
+                setTrendingSeries(trendingSerieTvData.results);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
 
+    useEffect(() => {
+        fetchTrending();
+    }, []);
 
     function fetchContents() {
 
@@ -67,8 +101,11 @@ function GlobalProvider({ children }) {
         setSearch,
         isLoading,
         fetchContents,
+        fetchTrending,
         selectedGenre,
-        setSelectedGenre
+        setSelectedGenre,
+        trendingMovies,
+        trendingSeries
 
     };
 
