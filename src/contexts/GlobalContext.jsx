@@ -10,6 +10,7 @@ function GlobalProvider({ children }) {
     const [series, setSeries] = useState([]);
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedContent, setSelectedContent] = useState("all");
 
 
 
@@ -65,7 +66,7 @@ function GlobalProvider({ children }) {
         search,
         setSearch,
         isLoading,
-        fetchContents
+        fetchContents,
     };
 
     return (
