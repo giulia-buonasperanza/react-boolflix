@@ -2,9 +2,13 @@ import { NavLink } from "react-router";
 import useTheme from "../hooks/useTheme";
 import SearchBar from "./SearchBar";
 import Filters from "./Filters";
+import { useContext } from "react";
+import { GlobalContext } from "../contexts/GlobalContext";
+
 
 function Header() {
-    
+    const { resetHome } = useContext(GlobalContext);
+
     return (
         <header>
             <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom">
@@ -21,7 +25,9 @@ function Header() {
                     <div className="collapse navbar-collapse" id="mainNav">
                         <ul className="navbar-nav ms-auto align-items-center">
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/">Home</NavLink>
+                                <NavLink className="nav-link" to="/" onClick={resetHome}>
+                                    Home
+                                </NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/about">About</NavLink>

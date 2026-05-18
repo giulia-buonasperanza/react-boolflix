@@ -9,6 +9,7 @@ function GlobalProvider({ children }) {
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
     const [search, setSearch] = useState("");
+    const [submittedSearch, setSubmittedSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [selectedGenre, setSelectedGenre] = useState("all");
     const [trendingMovies, setTrendingMovies] = useState([]);
@@ -49,6 +50,8 @@ function GlobalProvider({ children }) {
     }, []);
 
     function fetchContents() {
+
+        setSubmittedSearch(search);
 
         const options = {
             method: 'GET',
@@ -94,19 +97,29 @@ function GlobalProvider({ children }) {
     };
 
 
+    function resetHome() {
+        setSearch("");
+        setSubmittedSearch("");
+        setSelectedGenre("all");
+        setMovies([]);
+        setSeries([]);  
+    }
+
     const contextValue = {
         movies,
         series,
         search,
         setSearch,
+        submittedSearch,
+        setSubmittedSearch,
         isLoading,
         fetchContents,
         fetchTrending,
         selectedGenre,
         setSelectedGenre,
         trendingMovies,
-        trendingSeries
-
+        trendingSeries,
+        resetHome
     };
 
     return (

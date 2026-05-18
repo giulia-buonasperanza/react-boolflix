@@ -9,11 +9,12 @@ function HomePage() {
     movies,
     series,
     search,
+    submittedSearch,
     selectedGenre
   } = useContext(GlobalContext);
 
-  const moviesToShow = search.trim() === "" ? trendingMovies : movies;
-  const seriesToShow = search.trim() === "" ? trendingSeries : series;
+  const moviesToShow = submittedSearch.trim() === "" ? trendingMovies : movies;
+  const seriesToShow = submittedSearch.trim() === "" ? trendingSeries : series;
 
   const filterByGenre = moviesToShow.filter((movie) => {
     if (selectedGenre === "all") {
