@@ -1,6 +1,6 @@
 function Loader() {
   return (
-    <h2>Loading...</h2>
+    <h2 className="text-light">Loading...</h2>
   )
 }
 export default Loader;

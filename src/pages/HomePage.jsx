@@ -25,19 +25,14 @@ function HomePage() {
 
 
   const moviesToShow = submittedSearch.trim() === "" ? trendingMovies : movies;
-  
+
   const filterMovies = moviesToShow.filter((movie) => {
-    const matches = selectedGenreMovies === "all"
-      ? true
-      : movie.genre_ids?.includes(parseInt(selectedGenreMovies, 10));
-
-    if (matches) {
-      console.log("Match:", movie.title, movie.genre_ids, selectedGenreMovies);
+    if (selectedGenreMovies === "all") {
+      return true;
     }
-
-    return matches;
+    return movie.genre_ids?.includes(parseInt(selectedGenreMovies, 10));
   });
-  
+
   const seriesToShow = submittedSearch.trim() === "" ? trendingSeries : series;
   const filteredSeries = seriesToShow.filter((serie) => {
 
@@ -53,28 +48,36 @@ function HomePage() {
   }
 
   return (<>
+    {showMovies && (
+      <>
+        <h2 className="sectionTitle">Movies</h2>
 
-    <h2 className="sectionTitle">Movies</h2>
-    <div className={styles.moviesGrid}>
-      {filterMovies.map((movie) => (
-        <FlipCard
-          key={movie.id}
-          item={movie}
-          mediaType="movie"
-        />
-      ))}
-    </div>
+        <div className={styles.moviesGrid}>
+          {filterMovies.map((movie) => (
+            <FlipCard
+              key={movie.id}
+              item={movie}
+              mediaType="movie"
+            />
+          ))}
+        </div>
+      </>
+    )}
 
-    <h2 className="sectionTitle">Series</h2>
-    <div className={styles.seriesGrid}>
-      {filteredSeries.map((serie) => (
-        <FlipCard
-          key={serie.id}
-          item={serie}
-          mediaType="tv"
-        />
-      ))}
-    </div>
+    {showSeries && (
+      <>
+        <h2 className="sectionTitle">Series</h2>
+        <div className={styles.seriesGrid}>
+          {filteredSeries.map((serie) => (
+            <FlipCard
+              key={serie.id}
+              item={serie}
+              mediaType="tv"
+            />
+          ))}
+        </div>
+      </>
+    )}
   </>
   );
 }

@@ -4,13 +4,13 @@ import Footer from "../components/Footer";
 
 function MainLayout() {
     return (
-        <>
+        <div className="d-flex flex-column min-vh-100">
             <Header />
-            <main className="container v-100 my-4">
+            <main className="container flex-grow-1 my-4">
                 <Outlet />
             </main>
             <Footer />
-        </>
+        </div>
     );
 }
 
