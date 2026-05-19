@@ -10,3 +10,29 @@
   componenti. Per stili specifici di un singolo componente è preferibile
   usare un CSS Module (es. `NomeComponente.module.css`).
 */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+
+  background:
+    linear-gradient(180deg,
+      #3b0000 0%,
+      #141414 25%,
+      #000000 100%);
+
+  color: white;
+
+  font-family:
+    Inter,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+

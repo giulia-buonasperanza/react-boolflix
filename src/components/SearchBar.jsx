@@ -20,7 +20,7 @@ function SearchBar() {
                 type="text"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
-                placeholder="Cerca un film o una serie TV..."
+                placeholder="Cerca un film o una serie"
             />
             <button className="btn btn-light" type="submit">Cerca</button>
         </form>

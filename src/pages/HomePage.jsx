@@ -19,8 +19,13 @@ function HomePage() {
     isLoading
   } = useContext(GlobalContext);
 
+  const showMovies = selectedGenreMovies !== "all" || selectedGenreSeries === "all";
+
+  const showSeries = selectedGenreSeries !== "all" || selectedGenreMovies === "all";
+
 
   const moviesToShow = submittedSearch.trim() === "" ? trendingMovies : movies;
+  
   const filterMovies = moviesToShow.filter((movie) => {
     const matches = selectedGenreMovies === "all"
       ? true
@@ -32,6 +37,7 @@ function HomePage() {
 
     return matches;
   });
+  
   const seriesToShow = submittedSearch.trim() === "" ? trendingSeries : series;
   const filteredSeries = seriesToShow.filter((serie) => {
 
@@ -48,7 +54,7 @@ function HomePage() {
 
   return (<>
 
-    <h2>Movies</h2>
+    <h2 className="sectionTitle">Movies</h2>
     <div className={styles.moviesGrid}>
       {filterMovies.map((movie) => (
         <FlipCard
@@ -59,7 +65,7 @@ function HomePage() {
       ))}
     </div>
 
-    <h2>Series</h2>
+    <h2 className="sectionTitle">Series</h2>
     <div className={styles.seriesGrid}>
       {filteredSeries.map((serie) => (
         <FlipCard
