@@ -19,27 +19,27 @@ function HomePage() {
     isLoading
   } = useContext(GlobalContext);
 
-  const showMovies = selectedGenreMovies !== "all" || selectedGenreSeries === "all";
+  const showMovies = selectedGenreSeries === "all";
 
-  const showSeries = selectedGenreSeries !== "all" || selectedGenreMovies === "all";
+  const showSeries = selectedGenreMovies === "all";
 
 
   const moviesToShow = submittedSearch.trim() === "" ? trendingMovies : movies;
 
   const filterMovies = moviesToShow.filter((movie) => {
-    if (selectedGenreMovies === "all") {
+    if (selectedGenreMovies === "all" || !selectedGenreMovies) {
       return true;
     }
-    return movie.genre_ids?.includes(parseInt(selectedGenreMovies, 10));
+    return movie.genre_ids?.includes(Number(selectedGenreMovies));
   });
 
   const seriesToShow = submittedSearch.trim() === "" ? trendingSeries : series;
   const filteredSeries = seriesToShow.filter((serie) => {
 
-    if (selectedGenreSeries === "all") {
+    if (selectedGenreSeries === "all" || !selectedGenreSeries) {
       return true;
     }
-    return serie.genre_ids?.includes(parseInt(selectedGenreSeries, 10));
+    return serie.genre_ids?.includes(Number(selectedGenreSeries));
   });
 
 

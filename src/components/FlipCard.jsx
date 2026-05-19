@@ -6,7 +6,7 @@ import styles from "./FlipCard.module.css";
 function FlipCard({ item, mediaType }) {
 
     const { renderStars} = useContext(GlobalContext);
-
+    const country = item.origin_country?.[0] || item.production_countries?.[0]?.iso_3166_1;
 
     return (
         <Link
@@ -27,10 +27,11 @@ function FlipCard({ item, mediaType }) {
                 <div className={styles.flipCardBack}>
 
                     <h4>{item.title || item.name}</h4>
-                    {item.origin_country &&
+                    {country && (
                         <p><strong>Paese di Produzione: </strong>
-                            <img src={`https://flagcdn.com/32x24/${item.origin_country[0].toLowerCase()}.png`} alt={item.origin_country[0]} />
-                        </p>}
+                            <img src={`https://flagcdn.com/32x24/${country.toLowerCase()}.png`} alt={country} />
+                        </p>
+                    )}
                     <p><strong>Voto: </strong>
                         <span className="ms-2">{renderStars(item?.vote_average)}</span>
                     </p>
