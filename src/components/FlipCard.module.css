@@ -1,0 +1,45 @@
+.flipCard {
+    width: 250px;
+    height: 375px;
+    perspective: 1000px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.flipCardInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform .7s;
+    transform-style: preserve-3d;
+}
+
+.flipCard:hover .flipCardInner {
+    transform: rotateY(180deg);
+}
+
+.flipCardFront,
+.flipCardBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    backface-visibility: hidden;
+}
+
+.flipCardFront img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.flipCardBack {
+    transform: rotateY(180deg);
+
+    background: #111;
+    color: white;
+
+    padding: 1rem;
+
+    overflow-y: auto;
+}

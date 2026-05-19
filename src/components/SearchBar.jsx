@@ -15,13 +15,14 @@ function SearchBar() {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text"
+        <form className="d-flex" onSubmit={handleSubmit}>
+            <input className="input-group-text"
+                type="text"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Cerca un film o una serie TV..."
             />
-            <button type="submit">Cerca</button>
+            <button className="btn btn-light" type="submit">Cerca</button>
         </form>
     )
 }

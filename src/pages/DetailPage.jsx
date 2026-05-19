@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalContext";
 import { useContext } from "react";
 import CardFilm from "../components/CardFilm";
+import Loader from "../components/Loader";
 
 
 
@@ -20,7 +21,7 @@ function DetailPage() {
   }, [id, mediaType]);
 
   if (!detail) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

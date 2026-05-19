@@ -1,3 +1,4 @@
+import { use } from "react";
 import { createContext, useState, useEffect } from "react";
 
 const GlobalContext = createContext();
@@ -8,12 +9,21 @@ const API_TMDB_TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 function GlobalProvider({ children }) {
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
+
     const [search, setSearch] = useState("");
     const [submittedSearch, setSubmittedSearch] = useState("");
+
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedGenre, setSelectedGenre] = useState("all");
+
+    const [selectedGenreMovies, setSelectedGenreMovies] = useState("all");
+    const [selectedGenreSeries, setSelectedGenreSeries] = useState("all");
+
+    const [movieGenres, setMovieGenres] = useState([]);
+    const [tvGenres, setTvGenres] = useState([]);
+
     const [trendingMovies, setTrendingMovies] = useState([]);
     const [trendingSeries, setTrendingSeries] = useState([]);
+
 
     function fetchTrending() {
         const options = {
@@ -48,6 +58,44 @@ function GlobalProvider({ children }) {
     useEffect(() => {
         fetchTrending();
     }, []);
+
+
+    function fetchGenres() {
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${API_TMDB_TOKEN}`
+            }
+        };
+
+        const movieGenreUrl = `${API_TMDB_BASE_URL}/genre/movie/list?language=it-IT`;
+        const serieTvGenreUrl = `${API_TMDB_BASE_URL}/genre/tv/list?language=it-IT`;
+
+        const movieGenreFetch = fetch(movieGenreUrl, options)
+            .then((response) => {
+                return response.json();
+            });
+        const serieTvGenreFetch = fetch(serieTvGenreUrl, options)
+            .then((response) => {
+                return response.json();
+            });
+
+        Promise.all([movieGenreFetch, serieTvGenreFetch])
+            .then(([movieGenreData, serieTvGenreData]) => {
+                setMovieGenres(movieGenreData.genres);
+                setTvGenres(serieTvGenreData.genres);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    useEffect(() => {
+        fetchGenres();
+    }, []);
+
+
 
     function fetchContents() {
 
@@ -119,9 +167,31 @@ function GlobalProvider({ children }) {
     function resetHome() {
         setSearch("");
         setSubmittedSearch("");
-        setSelectedGenre("all");
+        setSelectedGenreMovies("all");
+        setSelectedGenreSeries("all");
         setMovies([]);
         setSeries([]);
+    }
+
+
+
+    function renderStars(voteAverageRaw) {
+        const voteAverage = ( voteAverageRaw ?? 0 )/ 2;
+        const fullStars = Math.floor(voteAverage);
+        const halfStar = voteAverage - fullStars >= 0.5;
+        const stars = [];
+
+        for (let i = 0; i < 5; i++) {
+            if (i < fullStars) {
+                stars.push(<i key={i} className="bi bi-star-fill text-warning" />);
+            } else if (i === fullStars && halfStar) {
+                stars.push(<i key={i} className="bi bi-star-half text-warning" />);
+            }
+            else {
+                stars.push(<i key={i} className="bi bi-star text-warning" />);
+            }
+        }
+        return stars;
     }
 
     const contextValue = {
@@ -134,10 +204,15 @@ function GlobalProvider({ children }) {
         isLoading,
         fetchContents,
         fetchTrending,
-        selectedGenre,
-        setSelectedGenre,
+        selectedGenreMovies,
+        setSelectedGenreMovies,
+        movieGenres,
+        tvGenres,
+        selectedGenreSeries,
+        setSelectedGenreSeries,
         trendingMovies,
         trendingSeries,
+        renderStars,
         resetHome,
         fetchDetail
     };
